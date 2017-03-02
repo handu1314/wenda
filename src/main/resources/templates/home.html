@@ -1,0 +1,20 @@
+<html>
+<body>
+<pre>
+    $!{value}
+    $!{colors}
+    #foreach($color in $colors)
+        this is color:$color
+    #end
+    #foreach($key in $map.keySet())
+        key:$key value:$map.get($key)
+    #end
+
+    #set($hello = "hello")
+    #set($hello2 = "$!{hello} world")
+    $!{hello}
+    $!{hello2}
+
+</pre>
+</body>
+</html>
