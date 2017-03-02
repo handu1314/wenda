@@ -19,7 +19,7 @@ import java.security.PublicKey;
 import java.util.*;
 
 @Controller
-public class IndexControler {
+public class IndexController {
 
     @RequestMapping(path={"/","/index"})
     @ResponseBody
