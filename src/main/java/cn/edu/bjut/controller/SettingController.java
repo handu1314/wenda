@@ -1,4 +1,4 @@
-package cn.edu.bjut.controler;
+package cn.edu.bjut.controller;
 
 import cn.edu.bjut.service.WenDaService;
 import org.springframework.beans.factory.annotation.Autowired;

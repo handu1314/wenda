@@ -1,4 +1,4 @@
-package cn.edu.bjut.controler;
+package cn.edu.bjut.controller;
 
 /**
  * Created by Administrator on 2017/3/2.
@@ -11,18 +11,14 @@ import cn.edu.bjut.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.jws.Oneway;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.rmi.MarshalledObject;
-import java.security.PublicKey;
 import java.util.*;
 
 @Controller

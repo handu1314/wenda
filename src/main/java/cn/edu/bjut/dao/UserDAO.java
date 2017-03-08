@@ -24,4 +24,7 @@ public interface UserDAO {
     @Select({"select ",SELECT_FIELDS,"from ",TABLE_NAME," where id=#{id}"})
     User getUserById(int id);
 
+    @Select({"select ",SELECT_FIELDS,"from ",TABLE_NAME," where name=#{name}"})
+    User getUserByName(String name);
+
 }

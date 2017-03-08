@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class LogAspect {
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger(LogAspect.class);
 
-    @Before("execution(* cn.edu.bjut.controler.*Controller.*(..))")
+    @Before("execution(* cn.edu.bjut.controller.*Controller.*(..))")
     public void before(JoinPoint joinPoint){
         StringBuffer sb = new StringBuffer();
         for(Object arg : joinPoint.getArgs()){
@@ -24,7 +24,7 @@ public class LogAspect {
         logger.info("Before:" + sb.toString());
     }
 
-    @After("execution(* cn.edu.bjut.controler.*Controller.*(..))")
+    @After("execution(* cn.edu.bjut.controller.*Controller.*(..))")
     public void after(JoinPoint joinPoint){
         StringBuffer sb = new StringBuffer();
         for(Object arg : joinPoint.getArgs()){
