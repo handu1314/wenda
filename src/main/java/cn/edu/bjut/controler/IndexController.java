@@ -4,12 +4,19 @@ package cn.edu.bjut.controler;
  * Created by Administrator on 2017/3/2.
  */
 
+import cn.edu.bjut.model.Question;
+import cn.edu.bjut.model.ViewObject;
+import cn.edu.bjut.service.QuestionService;
+import cn.edu.bjut.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.jws.Oneway;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,11 +27,36 @@ import java.util.*;
 
 @Controller
 public class IndexController {
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    QuestionService questionService;
 
     @RequestMapping(path={"/","/index"})
-    @ResponseBody
-    public String index(HttpSession session){
-        return "Hello bjut" + session.getAttribute("msg");
+    public String index(Model model){
+
+        model.addAttribute("vos",getQuestions(0,0,4));
+        return "index";
+    }
+
+    @RequestMapping(path={"/user/{id}"})
+    public String userIndex(@PathVariable("id") int id,Model model){
+
+        model.addAttribute("vos",getQuestions(id,0,4));
+        return "index";
+    }
+
+    private List<ViewObject> getQuestions(int id,int offset,int limit){
+        List<Question> questions = questionService.selectLatestQuestions(id,offset,limit);
+        List<ViewObject> vos = new ArrayList<ViewObject>();
+        for(Question q : questions){
+            ViewObject v = new ViewObject();
+            v.put("question",q);
+            v.put("user",userService.getUserById(q.getUserId()));
+            vos.add(v);
+        }
+        return vos;
     }
 
     @RequestMapping(path={"/profile/{groupId}/{userId}"})

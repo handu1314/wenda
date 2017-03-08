@@ -43,6 +43,20 @@ public class WendaApplicationTests {
 
 	@Test
 	public void QuestionDaoTest(){
+		Random random = new Random();
+
+		for(int i=0;i<4;++i){
+			User user = new User();
+			user.setName("user" + String.valueOf(i));
+			user.setPassword(String.valueOf(random.nextInt(9999)));
+			user.setHeadUrl(String.format("http://images.nowcoder.com/head/%dt.png", random.nextInt(1000)));
+			user.setSalt("user" + String.valueOf(i*i));
+			userService.addUser(user);
+
+			user.setPassword("1234567");
+			userService.updateUser(user);
+		}
+
 		for(int i=0;i<4;++i){
 			Question q = new Question();
 			q.setCommentCount(i);
