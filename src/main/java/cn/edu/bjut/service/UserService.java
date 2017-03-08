@@ -12,7 +12,20 @@ import org.springframework.stereotype.Service;
 public class UserService {
     @Autowired
     UserDAO userDAO;
-    public void addUser(User user){
-        userDAO.insertUser(user);
+
+    public int addUser(User user){
+        return userDAO.insertUser(user);
+    }
+
+    public void updateUser(User user){
+        userDAO.updateUser(user);
+    }
+
+    public User getUserById(int id){
+        return userDAO.getUserById(id);
+    }
+
+    public void deleteUserById(int id){
+        userDAO.deleteUser(id);
     }
 }

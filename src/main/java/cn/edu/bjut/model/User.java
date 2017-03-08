@@ -4,7 +4,7 @@ package cn.edu.bjut.model;
  * Created by Administrator on 2017/3/2.
  */
 public class User {
-    private int userId;
+    private int id;
     private String name;
     private String password;
     private String salt;
@@ -12,17 +12,17 @@ public class User {
 
     public User(){}
 
-    public User(int userId,String name){
-        this.userId = userId;
+    public User(int id,String name){
+        this.id = id;
         this.name = name;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getId() {
+        return id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
