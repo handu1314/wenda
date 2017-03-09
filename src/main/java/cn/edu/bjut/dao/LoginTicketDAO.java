@@ -1,8 +1,8 @@
 package cn.edu.bjut.dao;
 
 import cn.edu.bjut.model.LoginTicket;
+
 import org.apache.ibatis.annotations.*;
-import org.springframework.stereotype.Service;
 
 /**
  * Created by Administrator on 2017/3/8.
@@ -20,5 +20,5 @@ public interface LoginTicketDAO {
     LoginTicket getLoginTicketByTicket(@Param("ticket") String ticket);
 
     @Update({"update ",TABLE_NAME," set status=#{status} where ticket=#{ticket}"})
-    void updateLoginTicket(@Param("status") String status,@Param("ticket") String ticket);
+    void updateLoginTicket(@Param("status") int status,@Param("ticket") String ticket);
 }
