@@ -16,6 +16,10 @@ import java.util.List;
 public class QuestionService {
     @Autowired
     QuestionDAO questionDAO;
+
+    @Autowired
+    SensitiveService sensitiveService;
+
     public List<Question> selectLatestQuestions(int userId, int offset, int limit){
         return questionDAO.selectLatestQuestions(userId,offset,limit);
     }
@@ -25,6 +29,8 @@ public class QuestionService {
         question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
         question.setContent(HtmlUtils.htmlEscape(question.getContent()));
         //敏感词过滤
+        question.setTitle(sensitiveService.filter(question.getTitle()));
+        question.setContent(sensitiveService.filter(question.getContent()));
         return questionDAO.addQuestion(question);
     }
 }
