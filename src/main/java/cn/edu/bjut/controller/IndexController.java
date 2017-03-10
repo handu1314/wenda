@@ -38,7 +38,6 @@ public class IndexController {
 
     @RequestMapping(path={"/user/{id}"})
     public String userIndex(@PathVariable("id") int id,Model model){
-
         model.addAttribute("vos",getQuestions(id,0,4));
         return "index";
     }

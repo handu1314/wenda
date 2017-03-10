@@ -5,6 +5,7 @@ import cn.edu.bjut.dao.QuestionDAO;
 import cn.edu.bjut.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
@@ -20,6 +21,10 @@ public class QuestionService {
     }
 
     public int addQuestion(Question question){
+        //过滤html标签
+        question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
+        question.setContent(HtmlUtils.htmlEscape(question.getContent()));
+        //敏感词过滤
         return questionDAO.addQuestion(question);
     }
 }
