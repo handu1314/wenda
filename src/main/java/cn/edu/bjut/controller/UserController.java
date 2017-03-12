@@ -5,6 +5,7 @@ import cn.edu.bjut.service.UserService;
 import cn.edu.bjut.model.User;
 import com.sun.deploy.net.HttpResponse;
 import org.apache.catalina.Host;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ public class UserController {
     @RequestMapping(value = "/reg", method = {RequestMethod.POST})
     public String register(@RequestParam("name") String name,
                            @RequestParam("password") String password,
+                           @RequestParam(value = "next",required = false) String next,
                            Model model,
                            HttpServletResponse response) {
         try {
@@ -38,6 +40,9 @@ public class UserController {
                 return "login";
             } else {
                 response.addCookie(new Cookie("ticket", msg.get("ticket")));
+                if(!StringUtils.isBlank(next)){
+                    return "redirect:/" + next;
+                }
                 return "redirect:/";
             }
         } catch (Exception e) {
@@ -62,7 +67,9 @@ public class UserController {
             model.addAttribute("msg", msg);
             return "login";
         } else {
-            response.addCookie(new Cookie("ticket", msg.get("ticket")));
+            Cookie cookie = new Cookie("ticket",msg.get("ticket").toString());
+            cookie.setPath("/");
+            response.addCookie(cookie);
             return "redirect:/";
         }
     }

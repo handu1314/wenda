@@ -3,6 +3,7 @@ package cn.edu.bjut.service;
 import cn.edu.bjut.dao.QuestionDAO;
 import cn.edu.bjut.dao.QuestionDAO;
 import cn.edu.bjut.model.Question;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
@@ -32,5 +33,9 @@ public class QuestionService {
         question.setTitle(sensitiveService.filter(question.getTitle()));
         question.setContent(sensitiveService.filter(question.getContent()));
         return questionDAO.addQuestion(question);
+    }
+
+    public Question getQuestionById(int id){
+        return questionDAO.getQuesionById(id);
     }
 }

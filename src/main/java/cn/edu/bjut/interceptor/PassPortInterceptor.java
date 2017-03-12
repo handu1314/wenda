@@ -38,7 +38,6 @@ public class PassPortInterceptor implements HandlerInterceptor{
                 }
             }
         }
-
         if(ticket != null){
             LoginTicket loginTicket = loginTicketDAO.getLoginTicketByTicket(ticket);
             if(loginTicket == null || loginTicket.getStatus() == 1 || loginTicket.getExpired().before(new Date())){
@@ -48,14 +47,12 @@ public class PassPortInterceptor implements HandlerInterceptor{
                 hostLoginUser.setUser(user);
             }
         }
-
         return true;
     }
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-
-        if(modelAndView != null){
+        if(modelAndView != null && hostLoginUser.getUser() != null){
             modelAndView.addObject("user",hostLoginUser.getUser());
         }
     }
