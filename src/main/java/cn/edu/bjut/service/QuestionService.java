@@ -36,6 +36,6 @@ public class QuestionService {
     }
 
     public Question getQuestionById(int id){
-        return questionDAO.getQuesionById(id);
+        return questionDAO.getQuestionById(id);
     }
 }
