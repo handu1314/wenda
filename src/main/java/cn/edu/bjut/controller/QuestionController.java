@@ -1,8 +1,7 @@
 package cn.edu.bjut.controller;
 
-import cn.edu.bjut.model.HostLoginUser;
-import cn.edu.bjut.model.Question;
-import cn.edu.bjut.model.ViewObject;
+import cn.edu.bjut.model.*;
+import cn.edu.bjut.service.CommentService;
 import cn.edu.bjut.service.QuestionService;
 import cn.edu.bjut.service.UserService;
 import cn.edu.bjut.util.WendaUtil;
@@ -31,6 +30,9 @@ public class QuestionController {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    CommentService commentService;
+
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @RequestMapping(value = "/question/add", method = {RequestMethod.POST})
@@ -41,6 +43,9 @@ public class QuestionController {
             question.setTitle(title);
             question.setContent(content);
             question.setCreatedDate(new Date());
+            if(hostLoginUser.getUser() == null){
+                return WendaUtil.getJSONString(999,"未登录");
+            }
             question.setUserId(hostLoginUser.getUser().getId());
             question.setCommentCount(0);
             questionService.addQuestion(question);
@@ -55,15 +60,20 @@ public class QuestionController {
     public String questionIndex(@PathVariable("id") int id, Model model) {
 
         Question question = questionService.getQuestionById(id);
-        List<ViewObject> vos = new ArrayList<ViewObject>();
-        ViewObject v = new ViewObject();
-        v.put("question", question);
-        v.put("user", userService.getUserById(question.getUserId()));
-        vos.add(v);
+        model.addAttribute("question",question);
 
-        model.addAttribute("vos",vos);
+        List<Comment> commentList = commentService.getCommentsByEntity(id, EntityType.ENTITY_QUESTION,0,10);
+        List<ViewObject> comments = new ArrayList<ViewObject>();
+        for (Comment comment:commentList) {
+            ViewObject viewObject = new ViewObject();
+            viewObject.put("comment",comment);
+            viewObject.put("user",userService.getUserById(comment.getUserId()));
+            comments.add(viewObject);
+        }
 
-        return "index";
+        model.addAttribute("comments",comments);
+
+        return "detail";
 
     }
 }

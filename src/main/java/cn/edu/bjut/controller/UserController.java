@@ -91,10 +91,4 @@ public class UserController {
         return "success";
     }
 
-    @RequestMapping(value = "/deleteById", method = {RequestMethod.GET})
-    @ResponseBody
-    public String deleteById(@RequestParam("id") int id) {
-        userService.deleteUserById(id);
-        return "success";
-    }
 }

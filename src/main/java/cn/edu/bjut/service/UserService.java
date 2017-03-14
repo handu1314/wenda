@@ -122,7 +122,7 @@ public class UserService {
         return userDAO.getUserById(id);
     }
 
-    public void deleteUserById(int id){
-        userDAO.deleteUser(id);
+    public User getUserByName(String name){
+        return userDAO.getUserByName(name);
     }
 }

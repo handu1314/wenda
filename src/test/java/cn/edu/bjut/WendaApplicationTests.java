@@ -38,7 +38,7 @@ public class WendaApplicationTests {
 			userService.updateUser(user);
 		}
 
-		userService.deleteUserById(1);
+		//userService.deleteUserById(1);
 	}
 
 	@Test

@@ -17,11 +17,12 @@ public interface QuestionDAO {
     @Insert({"insert into ",TABLE_NAME,"(",INSERT_FIELDS,") values (#{title},#{content},#{createdDate},#{userId},#{commentCount})"})
     int addQuestion(Question question);
 
-    @Delete({"delete from ",TABLE_NAME," where id=#{id}"})
-    public void deleteQuestion(int id);
+    @Update({"update ",TABLE_NAME," set comment_count=#{commentCount} where id=#{id}"})
+    public void updateCommentCount(@Param("id") int id,
+                               @Param("commentCount") int commentCount);
 
-    @Delete({"select ",SELECT_FIELDS," from ",TABLE_NAME," where id=#{id}"})
-    public Question getQuestionById(int id);
+    @Select({"select ",SELECT_FIELDS," from ",TABLE_NAME," where id=#{id}"})
+    public Question getQuestionById(@Param("id") int id);
 
     List<Question> selectLatestQuestions(@Param("userId") int userId, @Param("offset") int offset,
                                          @Param("limit") int limit);
