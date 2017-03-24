@@ -51,7 +51,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/regLogin", method = {RequestMethod.GET})
+    @RequestMapping(value = "/reglogin", method = {RequestMethod.GET})
     public String regLogin() {
         return "login";
     }

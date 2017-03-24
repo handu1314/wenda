@@ -37,7 +37,7 @@ public class MessageController {
     @RequestMapping(path="/msg/list",method = {RequestMethod.GET})
     public String getConversations(Model model){
         if(hostLoginUser.getUser() == null){
-            return "redirect:/regLogin";
+            return "redirect:/reglogin";
         }
         User user = hostLoginUser.getUser();
         List<Message> messageList = messageService.selectConversationList(user.getId(),0,10);
@@ -57,7 +57,7 @@ public class MessageController {
     @RequestMapping(path="/msg/detail",method = {RequestMethod.GET})
     public String getConversationDetail(Model model,@Param("conversationId") String conversationId){
         if(hostLoginUser.getUser() == null){
-            return "redirect:/regLogin";
+            return "redirect:/reglogin";
         }
 
         List<Message> messageList = messageService.getConversationDetail(conversationId,0,10);

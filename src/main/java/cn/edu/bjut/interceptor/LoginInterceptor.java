@@ -32,7 +32,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         if(hostLoginUser.getUser() == null){
-            httpServletResponse.sendRedirect("/regLogin?next="+httpServletRequest.getRequestURI());
+            httpServletResponse.sendRedirect("/reglogin?next="+httpServletRequest.getRequestURI());
         }
         return true;
     }

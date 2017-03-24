@@ -2,6 +2,7 @@ package cn.edu.bjut.controller;
 
 import cn.edu.bjut.model.*;
 import cn.edu.bjut.service.CommentService;
+import cn.edu.bjut.service.LikeService;
 import cn.edu.bjut.service.QuestionService;
 import cn.edu.bjut.service.UserService;
 import cn.edu.bjut.util.WendaUtil;
@@ -32,6 +33,9 @@ public class QuestionController {
 
     @Autowired
     CommentService commentService;
+
+    @Autowired
+    LikeService likeService;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -68,6 +72,13 @@ public class QuestionController {
             ViewObject viewObject = new ViewObject();
             viewObject.put("comment",comment);
             viewObject.put("user",userService.getUserById(comment.getUserId()));
+            viewObject.put("likedCount",likeService.getLikedCount(comment.getId(),EntityType.ENTITY_COMMENT));
+            if(hostLoginUser.getUser() == null){
+                viewObject.put("liked",0);
+            }else {
+                viewObject.put("liked",likeService.getLikedStatus(hostLoginUser.getUser().getId(),comment.getId(),EntityType.ENTITY_COMMENT));
+            }
+
             comments.add(viewObject);
         }
 
