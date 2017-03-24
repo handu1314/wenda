@@ -20,6 +20,9 @@ public interface CommentDAO {
             "(#{userId},#{content},#{createdDate},#{entityId},#{entityType},#{status})"})
     int addComment(Comment comment);
 
+    @Select({"select * from ",TABLE_NAME," where id=#{id}"})
+    Comment getCommentById(int id);
+
     @Select({"select count(id) from ",TABLE_NAME," where entity_id=#{entityId} and entity_type=#{entityType}"})
     public int getCommentCount(@Param("entityId") int entityId,
                                @Param("entityType") int entityType);

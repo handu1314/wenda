@@ -3,6 +3,7 @@ package cn.edu.bjut;
 import cn.edu.bjut.model.User;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONPObject;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import redis.clients.jedis.*;
 
 /**
@@ -159,6 +160,7 @@ public class TestRedis {
     public static void main(String[] args) {
         Jedis jedis = new Jedis();
         System.out.println(jedis.smembers("DISLIKE:2:7"));
-        jedis.flushDB();
+        //jedis.flushDB();
+        System.out.println(jedis.lrange("EVENT_LIKE",0,10));
     }
 }

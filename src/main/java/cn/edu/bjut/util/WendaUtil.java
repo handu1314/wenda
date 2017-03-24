@@ -14,8 +14,10 @@ import java.util.regex.Pattern;
  */
 public class WendaUtil {
     private static final Logger logger = LoggerFactory.getLogger(WendaUtil.class);
-
+    //匿名用户
     public static int ANONYMOUS_USERID = 3;
+    //系统管理员
+    public static int SYSADMIN_USERID = 4;
 
     public static String getJSONString(int code) {
         JSONObject json = new JSONObject();

@@ -44,4 +44,8 @@ public class CommentService {
     public boolean deleteComment(int entityId,int entityType,int status){
         return commentDAO.updateStatus(entityId,entityType,status) > 0 ? true : false;
     }
+
+    public Comment getCommentById(int id){
+        return commentDAO.getCommentById(id);
+    }
 }
