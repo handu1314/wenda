@@ -87,6 +87,7 @@ public class UserService {
             msg.put("msg","密码错误");
         }else {
             msg.put("ticket",addLoginTicket(user.getId()));
+            msg.put("userId", String.valueOf(user.getId()));
             hostLoginUser.setUser(user);
         }
         return msg;

@@ -1,5 +1,9 @@
 package cn.edu.bjut.controller;
 
+import cn.edu.bjut.async.EventHandler;
+import cn.edu.bjut.async.EventModel;
+import cn.edu.bjut.async.EventProductor;
+import cn.edu.bjut.async.EventType;
 import cn.edu.bjut.model.HostLoginUser;
 import cn.edu.bjut.service.UserService;
 import cn.edu.bjut.model.User;
@@ -24,6 +28,9 @@ import java.util.Map;
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    EventProductor eventProductor;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -70,6 +77,9 @@ public class UserController {
             Cookie cookie = new Cookie("ticket",msg.get("ticket").toString());
             cookie.setPath("/");
             response.addCookie(cookie);
+            //发送邮件
+            //User user = userService.getUserByName(name);
+            //eventProductor.fireEvent(new EventModel(EventType.LOGIN).setActorId(user.getId()));
             return "redirect:/";
         }
     }
