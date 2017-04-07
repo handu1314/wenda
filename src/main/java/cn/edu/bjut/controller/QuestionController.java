@@ -1,10 +1,7 @@
 package cn.edu.bjut.controller;
 
 import cn.edu.bjut.model.*;
-import cn.edu.bjut.service.CommentService;
-import cn.edu.bjut.service.LikeService;
-import cn.edu.bjut.service.QuestionService;
-import cn.edu.bjut.service.UserService;
+import cn.edu.bjut.service.*;
 import cn.edu.bjut.util.WendaUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +23,6 @@ public class QuestionController {
     UserService userService;
 
     @Autowired
-    HostLoginUser hostLoginUser;
-
-    @Autowired
     QuestionService questionService;
 
     @Autowired
@@ -36,6 +30,12 @@ public class QuestionController {
 
     @Autowired
     LikeService likeService;
+
+    @Autowired
+    FollowService followService;
+
+    @Autowired
+    HostLoginUser hostLoginUser;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -83,6 +83,27 @@ public class QuestionController {
         }
 
         model.addAttribute("comments",comments);
+
+        List<ViewObject> followUsers = new ArrayList<ViewObject>();
+        // 获取关注的用户信息
+        List<Integer> users = followService.getFollowers(EntityType.ENTITY_QUESTION, id, 20);
+        for (Integer userId : users) {
+            ViewObject vo = new ViewObject();
+            User u = userService.getUserById(userId);
+            if (u == null) {
+                continue;
+            }
+            vo.put("name", u.getName());
+            vo.put("headUrl", u.getHeadUrl());
+            vo.put("id", u.getId());
+            followUsers.add(vo);
+        }
+        model.addAttribute("followUsers", followUsers);
+        if (hostLoginUser.getUser() != null) {
+            model.addAttribute("followed", followService.isFollower(hostLoginUser.getUser().getId(), EntityType.ENTITY_QUESTION, id));
+        } else {
+            model.addAttribute("followed", false);
+        }
 
         return "detail";
 

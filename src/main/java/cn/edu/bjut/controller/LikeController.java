@@ -1,7 +1,7 @@
 package cn.edu.bjut.controller;
 
 import cn.edu.bjut.async.EventModel;
-import cn.edu.bjut.async.EventProductor;
+import cn.edu.bjut.async.EventProducer;
 import cn.edu.bjut.async.EventType;
 import cn.edu.bjut.model.Comment;
 import cn.edu.bjut.model.EntityType;
@@ -37,7 +37,7 @@ public class LikeController {
     CommentService commentService;
 
     @Autowired
-    EventProductor eventProductor;
+    EventProducer eventProducer;
 
     @RequestMapping(path="/like",method = {RequestMethod.POST})
     @ResponseBody
@@ -49,7 +49,7 @@ public class LikeController {
         EventModel eventModel = new EventModel(EventType.LIKE).setActorId(hostLoginUser.getUser().getId())
                 .setEntityId(commentId).setEntityType(EntityType.ENTITY_COMMENT)
                 .setEntityOwnerId(comment.getUserId()).setExts("questionId",String.valueOf(comment.getEntityId()));
-        eventProductor.fireEvent(eventModel);
+        eventProducer.fireEvent(eventModel);
 
         long likeCount = likeService.like(hostLoginUser.getUser().getId(),commentId,EntityType.ENTITY_COMMENT);
         return WendaUtil.getJSONString(0,String.valueOf(likeCount));

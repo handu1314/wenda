@@ -4,8 +4,9 @@ package cn.edu.bjut.controller;
  * Created by Administrator on 2017/3/2.
  */
 
-import cn.edu.bjut.model.Question;
-import cn.edu.bjut.model.ViewObject;
+import cn.edu.bjut.model.*;
+import cn.edu.bjut.service.CommentService;
+import cn.edu.bjut.service.FollowService;
 import cn.edu.bjut.service.QuestionService;
 import cn.edu.bjut.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,15 @@ public class IndexController {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    FollowService followService;
+
+    @Autowired
+    CommentService commentService;
+
+    @Autowired
+    HostLoginUser hostLoginUser;
+
     @RequestMapping(path = {"/", "/index"})
     public String index(Model model) {
 
@@ -39,7 +49,19 @@ public class IndexController {
     @RequestMapping(path = {"/user/{id}"})
     public String userIndex(@PathVariable("id") int id, Model model) {
         model.addAttribute("vos", getQuestions(id, 0, 10));
-        return "index";
+        User user = userService.getUserById(id);
+        ViewObject vo = new ViewObject();
+        vo.put("user", user);
+        vo.put("commentCount", commentService.getUserCommentCount(id));
+        vo.put("followerCount", followService.getFollowerCount(EntityType.ENTITY_USER, id));
+        vo.put("followeeCount", followService.getFolloweeCount(id, EntityType.ENTITY_USER));
+        if (hostLoginUser.getUser() != null) {
+            vo.put("followed", followService.isFollower(hostLoginUser.getUser().getId(), EntityType.ENTITY_USER, id));
+        } else {
+            vo.put("followed", false);
+        }
+        model.addAttribute("profileUser", vo);
+        return "profile";
     }
 
     private List<ViewObject> getQuestions(int id, int offset, int limit) {
@@ -48,6 +70,7 @@ public class IndexController {
         for (Question q : questions) {
             ViewObject v = new ViewObject();
             v.put("question", q);
+            v.put("followCount", followService.getFollowerCount(EntityType.ENTITY_QUESTION, q.getId()));
             v.put("user", userService.getUserById(q.getUserId()));
             vos.add(v);
         }

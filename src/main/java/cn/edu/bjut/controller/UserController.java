@@ -1,14 +1,8 @@
 package cn.edu.bjut.controller;
 
-import cn.edu.bjut.async.EventHandler;
-import cn.edu.bjut.async.EventModel;
-import cn.edu.bjut.async.EventProductor;
-import cn.edu.bjut.async.EventType;
-import cn.edu.bjut.model.HostLoginUser;
+import cn.edu.bjut.async.EventProducer;
 import cn.edu.bjut.service.UserService;
 import cn.edu.bjut.model.User;
-import com.sun.deploy.net.HttpResponse;
-import org.apache.catalina.Host;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,12 +24,12 @@ public class UserController {
     UserService userService;
 
     @Autowired
-    EventProductor eventProductor;
+    EventProducer eventProducer;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @RequestMapping(value = "/reg", method = {RequestMethod.POST})
-    public String register(@RequestParam("name") String name,
+    public String register(@RequestParam("username") String name,
                            @RequestParam("password") String password,
                            @RequestParam(value = "next",required = false) String next,
                            Model model,
@@ -64,7 +58,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = {RequestMethod.POST})
-    public String login(@RequestParam("name") String name,
+    public String login(@RequestParam("username") String name,
                         @RequestParam("password") String password,
                         Model model,
                         HttpServletResponse response) {
