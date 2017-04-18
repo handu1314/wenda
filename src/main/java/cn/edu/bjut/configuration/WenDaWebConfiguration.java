@@ -24,4 +24,5 @@ public class WenDaWebConfiguration extends WebMvcConfigurerAdapter {
         registry.addInterceptor(loginInterceptor).addPathPatterns("/user/*");
         super.addInterceptors(registry);
     }
+
 }
