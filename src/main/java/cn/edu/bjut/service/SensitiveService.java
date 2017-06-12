@@ -142,9 +142,9 @@ public class SensitiveService implements InitializingBean{
         }
     }
 
-    public static void main(String[] args) {
-        SensitiveService sensitiveService = new SensitiveService();
-        sensitiveService.addWords("色情");
-        System.out.println(sensitiveService.filter("你好，你需要色情光盘么ffff"));
-    }
+//    public static void main(String[] args) {
+//        SensitiveService sensitiveService = new SensitiveService();
+//        sensitiveService.addWords("色情");
+//        System.out.println(sensitiveService.filter("你好，你需要色情光盘么ffff"));
+//    }
 }
