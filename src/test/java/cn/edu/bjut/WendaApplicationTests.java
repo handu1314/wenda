@@ -14,9 +14,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.Date;
 import java.util.Random;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = WendaApplication.class)
-@Sql("/init-schema.sql")
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@SpringApplicationConfiguration(classes = WendaApplication.class)
+//@Sql("/init-schema.sql")
 public class WendaApplicationTests {
 	@Autowired
 	UserService userService;
