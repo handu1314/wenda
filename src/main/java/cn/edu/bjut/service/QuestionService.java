@@ -5,8 +5,6 @@ import cn.edu.bjut.dao.QuestionDAO;
 import cn.edu.bjut.model.Question;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
 
@@ -23,12 +21,10 @@ public class QuestionService {
     @Autowired
     SensitiveService sensitiveService;
 
-    @Cacheable(value = "demo", key = "#userId")
     public List<Question> selectLatestQuestions(int userId, int offset, int limit){
         return questionDAO.selectLatestQuestions(userId,offset,limit);
     }
 
-    @CacheEvict(value="demo",key="#question")
     public int addQuestion(Question question){
         //过滤html标签
         question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
