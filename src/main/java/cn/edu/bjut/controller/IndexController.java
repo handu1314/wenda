@@ -41,9 +41,10 @@ public class IndexController {
 
     @RequestMapping(path = {"/", "/index"})
     public String index(Model model) {
+
         Long startTime = System.currentTimeMillis();
         model.addAttribute("vos", getQuestions(0, 0, 10));
-        System.out.println("耗时：" + String.valueOf(System.currentTimeMillis()-startTime));
+        System.out.println("耗时："+String.valueOf(System.currentTimeMillis()-startTime));
         return "index";
     }
 

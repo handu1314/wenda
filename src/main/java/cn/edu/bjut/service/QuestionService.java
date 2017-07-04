@@ -22,6 +22,7 @@ public class QuestionService {
     SensitiveService sensitiveService;
 
     public List<Question> selectLatestQuestions(int userId, int offset, int limit){
+        System.out.println("query form database");
         return questionDAO.selectLatestQuestions(userId,offset,limit);
     }
 
