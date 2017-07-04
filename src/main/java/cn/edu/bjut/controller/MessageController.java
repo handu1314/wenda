@@ -44,7 +44,7 @@ public class MessageController {
         List<ViewObject> conversations = new ArrayList<ViewObject>();
         for (Message message : messageList) {
             ViewObject vo = new ViewObject();
-            vo.put("conversation",message);
+            vo.put("message",message);
             int targetId = message.getFromId() == user.getId() ? message.getToId() : message.getFromId();
             vo.put("user",userService.getUserById(targetId));
             vo.put("unread",messageService.getUnreadCount(hostLoginUser.getUser().getId(),message.getConversationId()));
