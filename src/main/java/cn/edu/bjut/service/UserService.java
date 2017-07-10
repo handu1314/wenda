@@ -1,5 +1,6 @@
 package cn.edu.bjut.service;
 
+import cn.edu.bjut.MongoRepository.UserRepository;
 import cn.edu.bjut.dao.LoginTicketDAO;
 import cn.edu.bjut.dao.UserDAO;
 import cn.edu.bjut.model.HostLoginUser;
@@ -28,6 +29,9 @@ public class UserService {
     @Autowired
     HostLoginUser hostLoginUser;
 
+    @Autowired
+    UserRepository userRepository;
+
     public Map<String,String> register(String name,String password){
         Map<String,String> msg = new HashMap<String,String>();
         if(StringUtils.isBlank(name)){
@@ -54,11 +58,14 @@ public class UserService {
 
         user = new User();
         user.setName(name);
-        user.setSalt(UUID.randomUUID().toString().substring(0,6).replaceAll("-",""));
-        user.setPassword(WendaUtil.MD5(password+user.getSalt()));
+        user.setSalt(UUID.randomUUID().toString().substring(0, 6).replaceAll("-", ""));
+        user.setPassword(WendaUtil.MD5(password + user.getSalt()));
         Random random = new Random();
-        user.setHeadUrl(String.format("http://images.newcoder.com/head/%dt.png",random.nextInt(1000)));
+        user.setHeadUrl(String.format("http://images.newcoder.com/head/%dt.png", random.nextInt(1000)));
         userDAO.insertUser(user);
+
+        //存入mongoDB
+        //userRepository.save(user);
 
         msg.put("ticket",addLoginTicket(user.getId()));
         hostLoginUser.setUser(user);
@@ -78,6 +85,8 @@ public class UserService {
         }
 
         User user = userDAO.getUserByName(name);
+        //从mongoDB中查找
+        //User user = userRepository.findByName(name);
         if(user == null){
             msg.put("msg","用户名不存在");
             return msg;
@@ -124,6 +133,7 @@ public class UserService {
     }
 
     public User getUserByName(String name){
-        return userDAO.getUserByName(name);
+        //return userDAO.getUserByName(name);
+        return userRepository.findByName(name);
     }
 }

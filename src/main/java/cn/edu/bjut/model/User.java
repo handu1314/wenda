@@ -1,9 +1,12 @@
 package cn.edu.bjut.model;
 
+import org.springframework.data.annotation.Id;
+
 /**
  * Created by Administrator on 2017/3/2.
  */
 public class User {
+    @Id
     private int id;
     private String name;
     private String password;

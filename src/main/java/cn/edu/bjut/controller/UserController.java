@@ -1,5 +1,6 @@
 package cn.edu.bjut.controller;
 
+import cn.edu.bjut.MongoRepository.UserRepository;
 import cn.edu.bjut.async.EventProducer;
 import cn.edu.bjut.service.UserService;
 import cn.edu.bjut.model.User;
@@ -26,6 +27,9 @@ public class UserController {
     @Autowired
     EventProducer eventProducer;
 
+    @Autowired
+    UserRepository userRepository;
+
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @RequestMapping(value = "/reg", method = {RequestMethod.POST})
@@ -40,7 +44,9 @@ public class UserController {
                 model.addAttribute("msg", msg);
                 return "login";
             } else {
-                response.addCookie(new Cookie("ticket", msg.get("ticket")));
+                Cookie cookie = new Cookie("ticket",msg.get("ticket").toString());
+                cookie.setPath("/");
+                response.addCookie(cookie);
                 if(!StringUtils.isBlank(next)){
                     return "redirect:/" + next;
                 }
@@ -93,6 +99,12 @@ public class UserController {
         user.setPassword("hx");
         userService.updateUser(user);
         return "success";
+    }
+
+    @RequestMapping(value = "/findUserByName",method = {RequestMethod.GET})
+    public String findUserByName(@RequestParam("name") String name){
+        User user = userRepository.findByName(name);
+        return user.toString();
     }
 
 }
