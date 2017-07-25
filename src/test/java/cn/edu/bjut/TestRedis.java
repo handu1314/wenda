@@ -3,8 +3,10 @@ package cn.edu.bjut;
 import cn.edu.bjut.model.User;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONPObject;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import redis.clients.jedis.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author:hanxiao
@@ -159,8 +161,18 @@ public class TestRedis {
     }
     public static void main(String[] args) {
         Jedis jedis = new Jedis();
-        System.out.println(jedis.smembers("DISLIKE:2:7"));
-        //jedis.flushDB();
-        System.out.println(jedis.lrange("EVENT_LIKE",0,10));
+//        System.out.println(jedis.smembers("DISLIKE:2:7"));
+//        //jedis.flushDB();
+//        System.out.println(jedis.lrange("EVENT_LIKE",0,10));
+        jedis.set("CLOUD_APP_BLACK_KEY:HAN", "1");
+        System.out.println(jedis.get("CLOUD_APP_BLACK_KEY:HAN"));
+        System.out.println(jedis.get("CLOUD_APP_BLACK_KEY:xiao"));
+        System.out.println(jedis.del("CLOUD_APP_BLACK_KEY:HAN"));
+        System.out.println(jedis.get("CLOUD_APP_BLACK_KEY:HAN"));
+        jedis.set("CLOUD_APP_BLACK_KEY:HAN", "1");
+        System.out.println(jedis.get("CLOUD_APP_BLACK_KEY:HAN"));
+
+        Map m = new HashMap<>();
+        System.out.println(m.get("han"));
     }
 }
