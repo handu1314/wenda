@@ -111,32 +111,35 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.4.5</version>
+				<configuration>
+					<container>
+						<containerId>tomcat8x</containerId>
+						<home>/opt/apache-tomcat-8.0.24</home>
+					</container>
+					<configuration>
+						<type>existing</type>
+						<home>/opt/apache-tomcat-8.0.24</home>
+					</configuration>
+				</configuration>
+				<executions>
+					<execution>
+						<id>tomcat-deploy</id>
+						<phase>package</phase>
+						<goals><goal>deploy</goal></goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<defaultGoal>compile</defaultGoal>
+
 	</build>
 
-	<plugin>
-		<groupId>org.codehaus.cargo</groupId>
-		<artifactId>cargo-maven2-plugin</artifactId>
-		<version>1.4.5</version>
-		<configuration>
-			<container>
-				<containerId>tomcat7x</containerId>
-				<home>/opt/apache-tomcat-7.0.47</home>
-			</container>
-			<configuration>
-				<type>existing</type>
-				<home>/opt/apache-tomcat-7.0.47</home>
-			</configuration>
-		</configuration>
-		<executions>
-			<execution>
-				<id>tomcat-deploy</id>
-				<phase>package</phase>
-				<goals><goal>deploy</goal></goals>
-			</execution>
-		</executions>
-	</plugin>
+
+
 
 
 </project>
