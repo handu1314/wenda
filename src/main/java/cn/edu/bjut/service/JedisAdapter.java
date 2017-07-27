@@ -23,16 +23,18 @@ import java.util.Set;
 public class JedisAdapter implements InitializingBean {
     private static final Logger logger = LoggerFactory.getLogger(JedisAdapter.class);
     private JedisPool jedisPool;
+    private String password = "123456";
     @Override
     public void afterPropertiesSet() throws Exception {
         //jedisPool = new JedisPool("localhost");
-        Jedis jedis = new Jedis("113.209.24.0",6379);
-        jedis.auth("123456");
+        jedisPool = new JedisPool("113.209.24.0",6379);
     }
+
     public long sadd(String key,String value){
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
+            jedis.auth(password);
             return jedis.sadd(key,value);
         }catch (Exception e){
             logger.error("存入集合异常" + e.getMessage());
@@ -46,6 +48,7 @@ public class JedisAdapter implements InitializingBean {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
+            jedis.auth(password);
             return jedis.srem(key,value);
         }catch (Exception e){
             logger.error("存入集合异常" + e.getMessage());
@@ -59,6 +62,7 @@ public class JedisAdapter implements InitializingBean {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
+            jedis.auth(password);
             return jedis.scard(key);
         }catch (Exception e){
             logger.error("存入集合异常" + e.getMessage());
@@ -72,6 +76,7 @@ public class JedisAdapter implements InitializingBean {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
+            jedis.auth(password);
             return jedis.sismember(key,value);
         }catch (Exception e){
             logger.error("存入集合异常" + e.getMessage());
@@ -86,6 +91,7 @@ public class JedisAdapter implements InitializingBean {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
+            jedis.auth(password);
             return jedis.lpush(key,value);
         }catch (Exception e){
             logger.error("存入集合异常" + e.getMessage());
@@ -100,6 +106,7 @@ public class JedisAdapter implements InitializingBean {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
+            jedis.auth(password);
             return jedis.brpop(timeout,key);
         }catch (Exception e){
             logger.error("存入集合异常" + e.getMessage());
@@ -149,6 +156,7 @@ public class JedisAdapter implements InitializingBean {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
+            jedis.auth(password);
             return jedis.zrange(key, start, end);
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
@@ -164,6 +172,7 @@ public class JedisAdapter implements InitializingBean {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
+            jedis.auth(password);
             return jedis.zrevrange(key, start, end);
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
@@ -179,6 +188,7 @@ public class JedisAdapter implements InitializingBean {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
+            jedis.auth(password);
             return jedis.zcard(key);
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
@@ -194,6 +204,7 @@ public class JedisAdapter implements InitializingBean {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
+            jedis.auth(password);
             return jedis.zscore(key, member);
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
