@@ -20,7 +20,7 @@ public class TestRedis {
         System.out.println(String.format("%d: %s",index,o.toString()));
     }
     public static void testRedis(){
-        Jedis jedis = new Jedis("localhost");
+        Jedis jedis = new Jedis("192.168.126.128");
         jedis.flushDB();
         jedis.set("address","beijing");
         print(1,jedis.get("address"));
@@ -160,19 +160,20 @@ public class TestRedis {
         print(25,u);
     }
     public static void main(String[] args) {
-        Jedis jedis = new Jedis();
-//        System.out.println(jedis.smembers("DISLIKE:2:7"));
-//        //jedis.flushDB();
-//        System.out.println(jedis.lrange("EVENT_LIKE",0,10));
-        jedis.set("CLOUD_APP_BLACK_KEY:HAN", "1");
-        System.out.println(jedis.get("CLOUD_APP_BLACK_KEY:HAN"));
-        System.out.println(jedis.get("CLOUD_APP_BLACK_KEY:xiao"));
-        System.out.println(jedis.del("CLOUD_APP_BLACK_KEY:HAN"));
-        System.out.println(jedis.get("CLOUD_APP_BLACK_KEY:HAN"));
-        jedis.set("CLOUD_APP_BLACK_KEY:HAN", "1");
-        System.out.println(jedis.get("CLOUD_APP_BLACK_KEY:HAN"));
-
-        Map m = new HashMap<>();
-        System.out.println(m.get("han"));
+        testRedis();
+//        Jedis jedis = new Jedis("192.168.126.128");
+////        System.out.println(jedis.smembers("DISLIKE:2:7"));
+////        //jedis.flushDB();
+////        System.out.println(jedis.lrange("EVENT_LIKE",0,10));
+//        jedis.set("CLOUD_APP_BLACK_KEY:HAN", "1");
+//        System.out.println(jedis.get("CLOUD_APP_BLACK_KEY:HAN"));
+//        System.out.println(jedis.get("CLOUD_APP_BLACK_KEY:xiao"));
+//        System.out.println(jedis.del("CLOUD_APP_BLACK_KEY:HAN"));
+//        System.out.println(jedis.get("CLOUD_APP_BLACK_KEY:HAN"));
+//        jedis.set("CLOUD_APP_BLACK_KEY:HAN", "1");
+//        System.out.println(jedis.get("CLOUD_APP_BLACK_KEY:HAN"));
+//
+//        Map m = new HashMap<>();
+//        System.out.println(m.get("han"));
     }
 }
